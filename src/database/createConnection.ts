@@ -1,20 +1,25 @@
-import mysql from "mysql";
+import mysql from "mysql2";
 const createConnection = async () => {
-  var con = mysql.createConnection({
-    host: process.env.DATABASE_URL || "localhost",
-    user: process.env.DATABASE_USER || "admin",
-    password: process.env.DATABASE_PASSWORD || "admin",
-    port: Number(process.env.DATABASE_PORT) || 3306,
-  });
+  try {
+    var con = mysql.createConnection({
+      host: process.env.DATABASE_URL || "localhost",
+      user: process.env.DATABASE_USER || "admin",
+      password: process.env.DATABASE_PASSWORD || "admin",
+      port: Number(process.env.DATABASE_PORT) || 3306,
+      database: process.env.DATABASE_NAME || "test",
+    });
 
-  con.connect(function (err) {
-    if (err) {
-      throw err;
-    }
-    console.info("Database connected!");
-  });
-
-  return con;
+    con.connect(function (err) {
+      if (err) {
+        throw err;
+      }
+      console.info("Database connected!");
+    });
+    return con;
+  } catch (error) {
+    console.error("Database error: " + error);
+    process.exit(1);
+  }
 };
 
 export default createConnection;

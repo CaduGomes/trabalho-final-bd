@@ -1,12 +1,11 @@
 import createConnection from "./database/createConnection";
 
 const app = async () => {
-  try {
-    await createConnection();
-  } catch (error) {
-    console.error("Database Error: " + error);
-    process.exit(1);
-  }
+  const db = await createConnection();
+
+  await db.execute("SELECT * FROM dados", (err, result) => {
+    console.table(result);
+  });
 };
 
 export default app;
