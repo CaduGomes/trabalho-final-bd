@@ -8,6 +8,8 @@ const app = async () => {
 
   await generateDatabase(db);
 
+  await fakeData(db);
+
   await getTravels(db, new Date("2021-06-01"), "3", "4");
   await getTravel(db, "1");
   await getUserInfo(db, "1");
