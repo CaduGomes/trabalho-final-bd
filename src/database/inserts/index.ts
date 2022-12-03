@@ -1,19 +1,6 @@
 import { Connection } from "mysql2/promise";
 
 const fakeData = async (db: Connection) => {
-  // cadastrar todos os estados do brasil na tabela state
-  db.query(`INSERT INTO State (name, id_state) VALUES ('Santa Catarina', '1')`);
-  db.query(
-    `INSERT INTO State (name, id_state) VALUES ('Rio Grande do Sul', '2')`
-  );
-
-  db.query(
-    `INSERT INTO City (name, id_state, id_city) VALUES ('Araranguá', '1', '1')`
-  );
-  db.query(
-    `INSERT INTO City (name, id_state, id_city) VALUES ('Osório', '2', '2')`
-  );
-
   // cadastrar na tabela Address (id_address, id_city, place, district, cep, number, complement) 2 endereços de cada cidade
   db.query(
     `INSERT INTO Address (id_address, id_city, place, district, cep, number, complement) VALUES ('1', '1', 'Rua 1', 'Centro', '88010-000', '1', 'Casa')`
