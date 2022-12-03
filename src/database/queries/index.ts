@@ -1,4 +1,4 @@
-import { Connection } from "mysql2";
+import { Connection } from "mysql2/promise";
 
 const searchTravel = async (
   db: Connection,
@@ -24,14 +24,13 @@ const searchTravel = async (
     AND
     Travel.date = ?`;
 
-    db.execute(
-      sql,
-      [origin, destination, date.toISOString()],
-      (err, result) => {
-        console.table(result);
-        console.log(err);
-      }
-    );
+    const result = await db.execute(sql, [
+      origin,
+      destination,
+      date.toISOString(),
+    ]);
+
+    console.table(result);
   } catch (err) {
     console.log(`Error searching travel: ${(err as Error).toString()}`);
   }
