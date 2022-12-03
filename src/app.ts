@@ -1,7 +1,7 @@
 import createConnection from "./database/createConnection";
 import generateDatabase from "./database/generateDatabase";
 import fakeData from "./database/inserts";
-import { searchTravel } from "./database/querys";
+import { searchTravel } from "./database/queries";
 
 const app = async () => {
   const db = await createConnection();
