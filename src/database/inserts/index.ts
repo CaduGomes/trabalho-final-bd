@@ -1,24 +1,6 @@
 import { Connection } from "mysql2/promise";
 
 const fakeData = async (db: Connection) => {
-  // cadastrar na tabela Address (id_address, id_city, place, district, cep, number, complement) 2 endereços de cada cidade
-  db.query(
-    `INSERT INTO Address (id_address, id_city, place, district, cep, number, complement) VALUES ('1', '1', 'Rua 1', 'Centro', '88010-000', '1', 'Casa')`
-  );
-  db.query(
-    `INSERT INTO Address (id_address, id_city, place, district, cep, number, complement) VALUES ('2', '1', 'Rua 2', 'Centro', '88010-000', '2', 'Casa')`
-  );
-  db.query(
-    `INSERT INTO Address (id_address, id_city, place, district, cep, number, complement) VALUES ('3', '2', 'Rua 3', 'Centro', '88010-000', '3', 'Casa')`
-  );
-  db.query(
-    `INSERT INTO Address (id_address, id_city, place, district, cep, number, complement) VALUES ('4', '2', 'Rua 4', 'Centro', '88010-000', '4', 'Casa')`
-  );
-
-  db.query(
-    `INSERT INTO Address (id_address, id_city, place, district, cep, number, complement) VALUES ('5', '1', 'Rua Governador Jorge Lacerda', 'Jardim das Avenidas', '88906-072', '3201', 'Campus')`
-  );
-
   db.query(
     `INSERT INTO Campus_UFSC (id_campus, id_address, name) VALUES ('1', '5', 'Campus Araranguá')`
   );
