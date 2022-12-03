@@ -1,22 +1,20 @@
-import { Connection } from "mysql2";
+import { Connection } from "mysql2/promise";
+import mainSeed from "../seeds/mainSeed";
 var fs = require("fs");
-var readline = require("readline");
 
 const generateDatabase = async (db: Connection) => {
   try {
-    db.query(`DROP DATABASE IF EXISTS UFSCarona`, function (err, result) {
-      if (err) throw err;
-      console.log("Database droped created");
-    });
-    db.query(`CREATE DATABASE IF NOT EXISTS UFSCarona`, function (err, result) {
-      if (err) throw err;
-      console.log("Database created");
-    });
+    await db.query(`DROP DATABASE IF EXISTS UFSCarona`);
 
-    db.query(`USE UFSCarona`, function (err, result) {
-      if (err) throw err;
-      console.log("using UFSCarona database");
-    });
+    console.info("Database dropped");
+
+    await db.query(`CREATE DATABASE IF NOT EXISTS UFSCarona`);
+
+    console.info("Database created");
+
+    await db.query(`USE UFSCarona`);
+
+    console.info("using UFSCarona database");
 
     const dataSql = fs
       .readFileSync("./brModelo/DDL.sql")
@@ -26,17 +24,11 @@ const generateDatabase = async (db: Connection) => {
         (line?: string) => line != null && line?.length > 0 && line !== "\n"
       );
 
-    dataSql.forEach((sql: string) => {
-      try {
-        db.query(sql, function (err, result) {
-          if (err) {
-            console.log(err);
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    });
+    for (const query of dataSql) {
+      await db.query(query);
+    }
+
+    console.info('DDL script has been run!')
   } catch (error) {
     console.error("Database error: " + error);
     process.exit(1);

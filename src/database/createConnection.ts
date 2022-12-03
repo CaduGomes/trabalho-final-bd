@@ -1,19 +1,16 @@
-import mysql from "mysql2";
+import mysql from "mysql2/promise";
+
 const createConnection = async () => {
   try {
-    var con = mysql.createConnection({
+    const con = await mysql.createConnection({
       host: process.env.DATABASE_URL || "localhost",
       user: process.env.DATABASE_USER || "admin",
       password: process.env.DATABASE_PASSWORD || "admin",
       port: Number(process.env.DATABASE_PORT) || 3306,
     });
 
-    con.connect(function (err) {
-      if (err) {
-        throw err;
-      }
-      console.info("Database connected!");
-    });
+    console.info("Database connected!");
+
     return con;
   } catch (error) {
     console.error("Database error: " + error);
