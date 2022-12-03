@@ -72,12 +72,13 @@ CREATE TABLE Payment_Method_Travel (
 
 CREATE TABLE Travel_User (
   id_travel_user varchar(255) PRIMARY KEY,
-  id_user varchar(255) UNIQUE,
-  id_travel varchar(255) UNIQUE,
+  id_user varchar(255),
+  id_travel varchar(255),
   user_type varchar(255),
   price varchar(255),
   FOREIGN KEY(id_user) REFERENCES User (id_user),
-  FOREIGN KEY(id_travel) REFERENCES Travel (id_travel)
+  FOREIGN KEY(id_travel) REFERENCES Travel (id_travel),
+  CONSTRAINT un_candidate_key UNIQUE (id_user, id_travel)
 );
 
 CREATE TABLE POI (

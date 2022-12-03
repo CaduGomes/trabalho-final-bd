@@ -80,13 +80,29 @@ const fakeData = async (db: Connection) => {
     `INSERT INTO POI (id_poi, id_address, name) VALUES ('4', '4', 'Ponto 4')`
   );
 
+  db.query(
+    `INSERT INTO POI (id_poi, id_address, name) VALUES ('5', '5', 'Ponto 5')`
+  );
+
   db.query(`INSERT INTO Travel (id_travel, date) VALUES ('1', '2021-06-01')`);
+
+  db.query(`INSERT INTO Travel (id_travel, date) VALUES ('2', '2021-06-01')`);
+
+  db.query(`INSERT INTO Travel (id_travel, date) VALUES ('3', '2021-06-02')`);
 
   db.query(
     `INSERT INTO Payment_Method_Travel (id_payment_method, id_travel) VALUES ('1', '1')`
   );
   db.query(
     `INSERT INTO Travel_User (id_travel_user, id_user, id_travel, user_type, price) VALUES ('1', '1', '1', 'driver', '0')`
+  );
+
+  db.query(
+    `INSERT INTO Travel_User (id_travel_user, id_user, id_travel, user_type, price) VALUES ('2', '2', '2', 'driver', '0')`
+  );
+
+  db.query(
+    `INSERT INTO Travel_User (id_travel_user, id_user, id_travel, user_type, price) VALUES ('3', '1', '3', 'driver', '0')`
   );
 
   db.query(
@@ -99,6 +115,30 @@ const fakeData = async (db: Connection) => {
 
   db.query(
     `INSERT INTO POI_Travel_User (id_travel_user, id_poi, type, order_number) VALUES ('1', '4', 'destination', '3')`
+  );
+
+  db.query(
+    `INSERT INTO POI_Travel_User (id_travel_user, id_poi, type, order_number) VALUES ('2', '3', 'origin', '1')`
+  );
+
+  db.query(
+    `INSERT INTO POI_Travel_User (id_travel_user, id_poi, type, order_number) VALUES ('2', '4', 'between', '2')`
+  );
+
+  db.query(
+    `INSERT INTO POI_Travel_User (id_travel_user, id_poi, type, order_number) VALUES ('2', '5', 'destination', '3')`
+  );
+
+  db.query(
+    `INSERT INTO POI_Travel_User (id_travel_user, id_poi, type, order_number) VALUES ('3', '1', 'origin', '1')`
+  );
+
+  db.query(
+    `INSERT INTO POI_Travel_User (id_travel_user, id_poi, type, order_number) VALUES ('3', '2', 'between', '2')`
+  );
+
+  db.query(
+    `INSERT INTO POI_Travel_User (id_travel_user, id_poi, type, order_number) VALUES ('3', '5', 'destination', '3')`
   );
 };
 

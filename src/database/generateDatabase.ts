@@ -1,6 +1,6 @@
 import { Connection } from "mysql2";
-var fs = require("fs");
-var readline = require("readline");
+const fs = require("fs");
+const readline = require("readline");
 
 const generateDatabase = async (db: Connection) => {
   try {
