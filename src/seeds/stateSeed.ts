@@ -1,7 +1,16 @@
 import { Connection } from "mysql2/promise";
 
 export default async (db: Connection) => {
-  await db.query(
-    `INSERT INTO ufscarona.state (id_state, name) VALUES ('2a3e302d-b316-4170-aabf-54e557c4f42e', 'Santa Catarina');`
-  );
+  // [id_state, name]
+  const states = [
+    ["1", "Santa Catarina"],
+    ["2", "Rio Grande do Sul"],
+  ];
+
+  for (const data of states) {
+    await db.execute(
+      `INSERT INTO ufscarona.state (id_state, name) VALUES (?, ?);`,
+      data
+    );
+  }
 };

@@ -1,6 +1,6 @@
 import { Connection } from "mysql2/promise";
-import adressSeed from "./adressSeed";
+import addressSeed from "./addressSeed";
 
 export default async (db: Connection) => {
-  await adressSeed(db);
+  await addressSeed(db);
 };
