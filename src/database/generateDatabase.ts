@@ -1,6 +1,6 @@
 import { Connection } from "mysql2/promise";
 import mainSeed from "../seeds/mainSeed";
-var fs = require("fs");
+import fs from "fs";
 
 const generateDatabase = async (db: Connection) => {
   try {
@@ -28,11 +28,11 @@ const generateDatabase = async (db: Connection) => {
       await db.query(query);
     }
 
-    console.info('DDL script has been run!')
+    console.info("DDL script has been run!");
 
     await mainSeed(db);
 
-    console.info('Seeds have been run!')
+    console.info("Seeds have been run!");
   } catch (error) {
     console.error("Database error: " + error);
     process.exit(1);
