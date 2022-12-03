@@ -29,6 +29,10 @@ const generateDatabase = async (db: Connection) => {
     }
 
     console.info('DDL script has been run!')
+
+    await mainSeed(db);
+
+    console.info('Seeds have been run!')
   } catch (error) {
     console.error("Database error: " + error);
     process.exit(1);
