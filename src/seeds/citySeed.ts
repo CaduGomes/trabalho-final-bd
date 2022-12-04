@@ -15,6 +15,10 @@ export default async (db: Connection) => {
     ["7", "2", "Xangri-Lá"],
     ["8", "2", "Três Cachoeiras"],
     ["9", "2", "Osório"],
+    ["10", "1", "Trindade"],
+    ["11", "1", "Joinville"],
+    ["12", "1", "Blumenau"],
+    ["13", "1", "Curitibanos"],
   ];
 
   for (const data of cities) {

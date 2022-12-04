@@ -8,7 +8,7 @@ export default async (db: Connection) => {
     ['3', '3', '1', 'passenger', '50'],
     ['4', '1', '2', 'driver', '0'],
     ['5', '4', '3', 'driver', '0'],
-    ['6', '4', '3', 'passenger', '100'],
+    ['6', '5', '3', 'passenger', '100'],
   ];
 
   for (const data of travelUsers) {

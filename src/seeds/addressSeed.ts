@@ -15,11 +15,11 @@ export default async (db: Connection) => {
     ["7", "7", "R. Rio Jacuí", "Centro", "95588-000", "854", null], // Xangri-lá
     ["8", "8", "Av. Inácio José Schaefer", "Nossa Sra. Aparecida", "95580-000", "2613", null], // Três Cachoeiras
     ["9", "9", "BR 101 KM", null, "95520-000", "99", null], // Osório
-    ["10", "10", "R. Governador Jorge Lacerda", "Jardim das Avenidas", "88906-072", "3201", null], // campus Araranguá
-    ["11", "11", "R. Eng. Agronômico Andrei Cristian Ferreira", "Trindade", "88040-900", null, null], // campus Trindade
-    ["12", "12", "R. Dona Francisca", "Zona Industrial Norte", "89219-600", "8300", null], // campus Joinville
-    ["13", "13", "R. João Pessoa", "Velha", "89036-003", "2514", null], // campus Blumenau
-    ["14", "14", "Rodovia Ulysses Gaboardi", "Curitibanos", "89520-000", "3000", null], // campus Curitibanos
+    ["10", "1", "R. Governador Jorge Lacerda", "Jardim das Avenidas", "88906-072", "3201", null], // campus Araranguá
+    ["11", "10", "R. Eng. Agronômico Andrei Cristian Ferreira", "Trindade", "88040-900", null, null], // campus Trindade
+    ["12", "11", "R. Dona Francisca", "Zona Industrial Norte", "89219-600", "8300", null], // campus Joinville
+    ["13", "12", "R. João Pessoa", "Velha", "89036-003", "2514", null], // campus Blumenau
+    ["14", "13", "Rodovia Ulysses Gaboardi", "Curitibanos", "89520-000", "3000", null], // campus Curitibanos
   ];
 
   for (const data of addresses) {

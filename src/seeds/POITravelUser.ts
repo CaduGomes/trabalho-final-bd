@@ -10,7 +10,7 @@ export default async (db: Connection) => {
 
   for (const data of POITravelUsers) {
     await db.execute(
-      `INSERT INTO ufscarona.travel_user (id_travel_user, id_poi, type, order_number) VALUES (?, ?, ?, ?, ?);`,
+      `INSERT INTO ufscarona.poi_travel_user (id_travel_user, id_poi, type, order_number) VALUES (?, ?, ?, ?);`,
       data
     );
   }
