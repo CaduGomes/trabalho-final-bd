@@ -36,7 +36,7 @@ const getTravels = async (
   }
 };
 
-const getTravel = async (db: Connection, id: string) => {
+const getTravelUsers = async (db: Connection, id: string) => {
   try {
     const sql = `
     SELECT User.id_user, User.name, User.age, Campus_UFSC.name, Destination.cityName as destinationCityName, Destination.stateName as destinationStateName,
@@ -93,4 +93,4 @@ const getUserInfo = async (db: Connection, id: string) => {
   }
 };
 
-export { getTravels, getTravel, getUserInfo };
+export { getTravels, getTravelUsers, getUserInfo };
