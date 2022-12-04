@@ -1,6 +1,7 @@
 import { Connection } from "mysql2/promise";
 import addressSeed from "./addressSeed";
 import campusSeed from "./campusSeed";
+import carSeed from "./carSeed";
 import paymentMethodSeed from "./paymentMethodSeed";
 import paymentMethodTravelSeed from "./paymentMethodTravelSeed";
 import POISeed from "./POISeed";
@@ -14,6 +15,7 @@ export default async (db: Connection) => {
   await campusSeed(db);
   await POISeed(db);
   await userSeed(db);
+  await carSeed(db);
   await paymentMethodSeed(db);
   await travelSeed(db);
   await travelUserSeed(db);
