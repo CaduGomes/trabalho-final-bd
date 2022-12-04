@@ -5,12 +5,12 @@ export default async (db: Connection) => {
   const POITravelUsers = [
     ["1", "1", "origin", "1"],
     ["1", "3", "between", "2"],
-    ["1", "4", "destination", "3"]
+    ["1", "4", "destination", "3"],
   ];
 
   for (const data of POITravelUsers) {
     await db.execute(
-      `INSERT INTO ufscarona.poi_travel_user (id_travel_user, id_poi, type, order_number) VALUES (?, ?, ?, ?);`,
+      `INSERT INTO UFSCarona.POI_Travel_User (id_travel_user, id_poi, type, order_number) VALUES (?, ?, ?, ?);`,
       data
     );
   }

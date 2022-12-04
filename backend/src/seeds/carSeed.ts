@@ -13,7 +13,7 @@ export default async (db: Connection) => {
 
   for (const data of cars) {
     await db.execute(
-      `INSERT INTO ufscarona.car (id_car, id_user, id_brand, plate, color, model) VALUES (?, ?, ?, ?, ?, ?);`,
+      `INSERT INTO UFSCarona.Car (id_car, id_user, id_brand, plate, color, model) VALUES (?, ?, ?, ?, ?, ?);`,
       data
     );
   }

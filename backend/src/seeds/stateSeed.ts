@@ -9,7 +9,7 @@ export default async (db: Connection) => {
 
   for (const data of states) {
     await db.execute(
-      `INSERT INTO ufscarona.state (id_state, name) VALUES (?, ?);`,
+      `INSERT INTO UFSCarona.State (id_state, name) VALUES (?, ?);`,
       data
     );
   }

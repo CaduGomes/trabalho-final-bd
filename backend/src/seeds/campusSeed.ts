@@ -12,7 +12,7 @@ export default async (db: Connection) => {
 
   for (const data of campi) {
     await db.execute(
-      `INSERT INTO ufscarona.campus_ufsc (id_campus, id_address, name) VALUES (?, ?, ?);`,
+      `INSERT INTO UFSCarona.Campus_UFSC (id_campus, id_address, name) VALUES (?, ?, ?);`,
       data
     );
   }

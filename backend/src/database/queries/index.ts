@@ -24,13 +24,14 @@ const getTravels = async (
     AND
     Travel.date = ?`;
 
-    const result = await db.execute(sql, [
+    const [rows, fields] = await db.execute(sql, [
       origin,
       destination,
       date.toISOString(),
     ]);
 
-    console.table(result);
+    console.log(rows);
+    console.log(fields);
   } catch (err) {
     console.log(`Error searching travels: ${(err as Error).toString()}`);
   }

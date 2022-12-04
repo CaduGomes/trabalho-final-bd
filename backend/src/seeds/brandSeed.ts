@@ -19,7 +19,7 @@ export default async (db: Connection) => {
 
   for (const data of brands) {
     await db.execute(
-      `INSERT INTO ufscarona.brand (id_brand, name)
+      `INSERT INTO UFSCarona.Brand (id_brand, name)
       VALUES (?, ?);`,
       data
     );

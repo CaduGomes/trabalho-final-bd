@@ -23,7 +23,7 @@ export default async (db: Connection) => {
 
   for (const data of cities) {
     await db.execute(
-      `INSERT INTO ufscarona.city (id_city, id_state, name) VALUES (?, ?, ?);`,
+      `INSERT INTO UFSCarona.City (id_city, id_state, name) VALUES (?, ?, ?);`,
       data
     );
   }

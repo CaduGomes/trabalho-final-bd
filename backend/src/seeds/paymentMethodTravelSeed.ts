@@ -18,7 +18,7 @@ export default async (db: Connection) => {
 
   for (const data of paymentMethodTravels) {
     await db.execute(
-      `INSERT INTO ufscarona.payment_method_travel (id_payment_method, id_travel)
+      `INSERT INTO UFSCarona.Payment_Method_Travel (id_payment_method, id_travel)
       VALUES (?, ?);`,
       data
     );

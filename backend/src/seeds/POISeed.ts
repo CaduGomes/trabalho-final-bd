@@ -16,7 +16,7 @@ export default async (db: Connection) => {
 
   for (const data of pois) {
     await db.execute(
-      `INSERT INTO ufscarona.poi (id_poi, id_address, name) VALUES (?, ?, ?);`,
+      `INSERT INTO UFSCarona.POI (id_poi, id_address, name) VALUES (?, ?, ?);`,
       data
     );
   }
