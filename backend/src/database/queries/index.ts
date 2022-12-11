@@ -2,7 +2,7 @@ import { Query } from "../../types";
 import { logQueryResult } from "../helpers/logQueryResult";
 
 const getTravels: Query<{
-  date: Date;
+  date: string;
   origin: string;
   destination: string;
 }> = async (db, data) => {
@@ -23,10 +23,7 @@ const getTravels: Query<{
     AND
     Travel.date = :date`;
 
-    const [result] = await db.execute(sql, {
-      ...data,
-      date: data.date.toISOString(),
-    });
+    const [result] = await db.execute(sql, data);
     logQueryResult(result);
 
     return result as any;
@@ -38,7 +35,7 @@ const getTravels: Query<{
 const getTravelUsers: Query<string> = async (db, id) => {
   try {
     const sql = `
-    SELECT User.id_user, User.name, User.age, Campus_UFSC.name, Destination.cityName as destinationCityName, Destination.stateName as destinationStateName,
+    SELECT User.id_user, User.name, User.age, Campus_UFSC.name as campusName, Destination.cityName as destinationCityName, Destination.stateName as destinationStateName,
     Origin.cityName as originCityName, Origin.stateName as originStateName from User
 	  INNER JOIN Campus_UFSC on Campus_UFSC.id_campus = User.id_campus
 	  INNER JOIN Travel on Travel.id_travel = :id
@@ -97,4 +94,23 @@ const getUserInfo: Query<string> = async (db, id) => {
   }
 };
 
-export { getTravels, getTravelUsers, getUserInfo };
+const getIDPOI: Query<string> = async (db, name) => {
+  try {
+    const sql = `
+    SELECT id_poi
+    FROM POI
+    INNER JOIN Address ON POI.id_address = Address.id_address
+    INNER JOIN City ON Address.id_city = City.id_city
+    WHERE City.name = :name;
+    `;
+
+    const [result] = await db.execute(sql, { name });
+    logQueryResult(result);
+
+    return result as any;
+  } catch (err) {
+    console.log(`Error searching user: ${(err as Error).toString()}`);
+  }
+}
+
+export { getTravels, getTravelUsers, getUserInfo, getIDPOI };

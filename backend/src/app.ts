@@ -11,7 +11,7 @@ const app = async () => {
   startServer(db);
 
   await getTravels(db, {
-    date: new Date("2021-06-01"),
+    date: "2021-06-01",
     origin: "3",
     destination: "4",
   });
