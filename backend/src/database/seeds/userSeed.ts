@@ -3,6 +3,7 @@ import { Connection } from "mysql2/promise";
 export default async (db: Connection) => {
   // [id_user, id_campus, name, email, password, age, cpf]
   const users = [
+    // motorista
     [
       "1",
       "1",
@@ -39,6 +40,7 @@ export default async (db: Connection) => {
       "22",
       "11579769055",
     ],
+    // motorista
     [
       "5",
       "4",
@@ -48,6 +50,7 @@ export default async (db: Connection) => {
       "20",
       "71803367008",
     ],
+    //motorista
     [
       "6",
       "5",
