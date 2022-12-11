@@ -1,7 +1,7 @@
 import { Query } from "../../types";
 import { logQueryResult } from "../helpers/logQueryResult";
 
-const getTravels: Query<{
+export const getTravels: Query<{
   date: string;
   origin: string;
   destination: string;
@@ -32,7 +32,7 @@ const getTravels: Query<{
   }
 };
 
-const getTravelUsers: Query<string> = async (db, id) => {
+export const getTravelUsers: Query<string> = async (db, id) => {
   try {
     const sql = `
     SELECT User.id_user, User.name, User.age, Campus_UFSC.name as campusName, Destination.cityName as destinationCityName, Destination.stateName as destinationStateName,
@@ -70,11 +70,11 @@ const getTravelUsers: Query<string> = async (db, id) => {
   }
 };
 
-const getUserInfo: Query<string> = async (db, id) => {
+export const getUserInfo: Query<string> = async (db, id) => {
   try {
     const sql = `
     SELECT 
-    User.name, User.age, User.email, User.password, User.cpf, 
+    User.name, User.age, User.email, User.cpf, 
     Campus_UFSC.name, 
     Car.model, Car.color, Car.plate,
     Brand.name
@@ -94,7 +94,7 @@ const getUserInfo: Query<string> = async (db, id) => {
   }
 };
 
-const getIDPOI: Query<string> = async (db, name) => {
+export const getIDPOI: Query<string> = async (db, name) => {
   try {
     const sql = `
     SELECT id_poi
@@ -111,6 +111,104 @@ const getIDPOI: Query<string> = async (db, name) => {
   } catch (err) {
     console.log(`Error searching user: ${(err as Error).toString()}`);
   }
-}
+};
 
-export { getTravels, getTravelUsers, getUserInfo, getIDPOI };
+// consulta com função de agregação
+export const getTotalSumTravels: Query<string> = async (db, user_id) => {
+  try {
+    const sql = `
+    SELECT Travel.id_travel as travelId, Travel.date, sum(travel_user.price) as totalSum
+    FROM User 
+    INNER JOIN Travel_User ON Travel_User.id_user = User.id_user
+    INNER JOIN Travel ON Travel_User.id_travel = Travel.id_travel
+    WHERE Travel_User.user_type = 'passenger' AND User.id_user = :user_id
+    GROUP BY travel_user.id_travel_user AND travel_user.user_type;
+    `;
+
+    const [result] = await db.execute(sql, { user_id });
+    logQueryResult(result);
+
+    return result as any;
+  } catch (err) {
+    console.log(`Error searching user: ${(err as Error).toString()}`);
+  }
+};
+
+// consulta com função de agregação e dados para gráfico
+export const getCarsByCampus: Query<string> = async (db) => {
+  try {
+    const sql = `
+    SELECT Campus_UFSC.name, count(*) AS total
+    FROM User
+    INNER JOIN Car ON Car.id_user = User.id_user
+    INNER JOIN Campus_UFSC ON User.id_campus = Campus_UFSC.id_campus
+    GROUP BY Campus_UFSC.name
+    `;
+
+    const [result] = await db.execute(sql);
+    logQueryResult(result);
+
+    return result as any;
+  } catch (err) {
+    console.log(`Error searching user: ${(err as Error).toString()}`);
+  }
+};
+
+// consulta com função de agregação e dados para gráfico
+export const getPOIsMostBadalados: Query<string> = async (db) => {
+  try {
+    const sql = `
+    SELECT POI.name, count(*) AS total
+    FROM Travel_User
+    INNER JOIN POI_Travel_User ON Travel_User.id_travel_user = POI_Travel_User.id_travel_user
+    INNER JOIN POI ON POI_Travel_User.id_POI = POI.id_POI
+    GROUP BY POI.name
+    `;
+
+    const [result] = await db.execute(sql);
+    logQueryResult(result);
+
+    return result as any;
+  } catch (err) {
+    console.log(`Error searching user: ${(err as Error).toString()}`);
+  }
+};
+
+// Consulta com função de agregação e dados para gráfico
+export const getTravelsByCampus: Query<string> = async (db) => {
+  try {
+    const sql = `
+    SELECT Campus_UFSC.name, count(*) as total from Travel
+    INNER JOIN Travel_User ON Travel.id_travel = Travel_User.id_travel
+    INNER JOIN User ON Travel_User.id_user = User.id_user
+    INNER JOIN Campus_UFSC ON User.id_campus = Campus_UFSC.id_Campus
+    GROUP BY Campus_UFSC.name
+    `;
+
+    const [result] = await db.execute(sql);
+    logQueryResult(result);
+
+    return result as any;
+  } catch (err) {
+    console.log(`Error searching user: ${(err as Error).toString()}`);
+  }
+};
+
+export const getPaymentMethodUses: Query<string> = async (db) => {
+  try {
+    const sql = `
+    select PM.name, count(*)
+    from Travel T
+    inner join Payment_Method_Travel PMT on PMT.id_travel = T.id_travel
+    inner join Payment_Method PM on PM.id_payment_method = PMT.id_payment_method
+    group by PM.name
+    `;
+
+    const [result] = await db.execute(sql);
+    logQueryResult(result);
+
+    return result as any;
+  } catch (err) {
+    console.log(`Error searching user: ${(err as Error).toString()}`);
+  }
+};
