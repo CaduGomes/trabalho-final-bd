@@ -1,17 +1,5 @@
-import { OkPacket, ResultSetHeader, RowDataPacket } from "mysql2/promise";
 import { Query } from "../../types";
-
-const logQueryResult = (
-  result:
-    | RowDataPacket[]
-    | RowDataPacket[][]
-    | OkPacket
-    | OkPacket[]
-    | ResultSetHeader
-) => {
-  console.log("Query result:");
-  console.table(result);
-};
+import { logQueryResult } from "../helpers/logQueryResult";
 
 const getTravels: Query<{
   date: Date;
@@ -41,7 +29,7 @@ const getTravels: Query<{
     });
     logQueryResult(result);
 
-    return result;
+    return result as any;
   } catch (err) {
     console.log(`Error searching travels: ${(err as Error).toString()}`);
   }
@@ -79,7 +67,7 @@ const getTravelUsers: Query<string> = async (db, id) => {
     const [result] = await db.execute(sql, { id });
     logQueryResult(result);
 
-    return result;
+    return result as any;
   } catch (err) {
     console.log(`Error searching travel: ${(err as Error).toString()}`);
   }
@@ -103,7 +91,7 @@ const getUserInfo: Query<string> = async (db, id) => {
     const [result] = await db.execute(sql, { id });
     logQueryResult(result);
 
-    return result;
+    return result as any;
   } catch (err) {
     console.log(`Error searching user: ${(err as Error).toString()}`);
   }

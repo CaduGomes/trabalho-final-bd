@@ -7,6 +7,7 @@ const createConnection = async () => {
       user: process.env.DATABASE_USER || "admin",
       password: process.env.DATABASE_PASSWORD || "admin",
       port: Number(process.env.DATABASE_PORT) || 3306,
+      namedPlaceholders: true,
     });
 
     console.info("Database connected!");
