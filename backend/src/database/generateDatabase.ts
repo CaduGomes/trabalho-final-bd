@@ -1,5 +1,5 @@
 import { Connection } from "mysql2/promise";
-import mainSeed from "../seeds/mainSeed";
+import mainSeed from "./seeds/mainSeed";
 import fs from "fs";
 
 const generateDatabase = async (db: Connection) => {
