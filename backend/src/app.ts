@@ -7,7 +7,11 @@ const app = async () => {
 
   await generateDatabase(db);
 
-  await getTravels(db, new Date("2021-06-01"), "3", "4");
+  await getTravels(db, {
+    date: new Date("2021-06-01"),
+    origin: "3",
+    destination: "4",
+  });
   await getTravelUsers(db, "1");
   await getUserInfo(db, "1");
 };
