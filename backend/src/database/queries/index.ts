@@ -35,30 +35,29 @@ export const getTravels: Query<{
 export const getTravelUsers: Query<string> = async (db, id) => {
   try {
     const sql = `
-    SELECT User.id_user, User.name, User.age, Campus_UFSC.name as campusName, Destination.cityName as destinationCityName, Destination.stateName as destinationStateName,
+    SELECT User.id_user, User.name, User.age, Campus_UFSC.name as campusName, Destination.cityName as destinationCityName, Origin.travelId, Destination.travelId, Destination.stateName as destinationStateName,
     Origin.cityName as originCityName, Origin.stateName as originStateName from User
 	  INNER JOIN Campus_UFSC on Campus_UFSC.id_campus = User.id_campus
 	  INNER JOIN Travel on Travel.id_travel = :id
     INNER JOIN
-	    (SELECT User.id_user, City.name as cityName, State.name as stateName from User
-	    INNER JOIN Travel_User on Travel_User.id_travel = :id
+	    (SELECT User.id_user, City.name as cityName, State.name as stateName, Travel_User.id_travel as travelId from User
+	    INNER JOIN Travel_User on Travel_User.id_travel = User.id_user
 	    INNER JOIN POI_Travel_User on POI_Travel_User.id_travel_user = Travel_User.id_travel_user
 	    INNER JOIN POI on POI.id_poi = POI_Travel_User.id_poi
 	    INNER JOIN Address on Address.id_address = POI.id_address
 	    INNER JOIN City on City.id_city = Address.id_city
 	    INNER JOIN State on State.id_state = City.id_state
-	    INNER JOIN Travel on Travel.id_travel = :id
-	    where POI_Travel_User.type = 'destination') Destination on Destination.id_user = User.id_user
+	    where POI_Travel_User.type = 'destination' AND Travel_User.id_travel = :id) Destination on Destination.id_user = User.id_user
     INNER JOIN
-	    (SELECT User.id_user, City.name as cityName, State.name as stateName from User
-	    INNER JOIN Travel_User on Travel_User.id_travel = :id
+	    (SELECT User.id_user, City.name as cityName, State.name as stateName, Travel_User.id_travel as travelId from User
+	    INNER JOIN Travel_User on Travel_User.id_user = User.id_user
 	    INNER JOIN POI_Travel_User on POI_Travel_User.id_travel_user = Travel_User.id_travel_user
 	    INNER JOIN POI on POI.id_poi = POI_Travel_User.id_poi
 	    INNER JOIN Address on Address.id_address = POI.id_address
 	    INNER JOIN City on City.id_city = Address.id_city
 	    INNER JOIN State on State.id_state = City.id_state
 	    INNER JOIN Travel on Travel.id_travel = :id
-	    where POI_Travel_User.type = 'origin') Origin on Origin.id_user = User.id_user;
+	    where POI_Travel_User.type = 'origin' AND Travel_User.id_travel = :id) Origin on Origin.id_user = User.id_user;
     `;
 
     const [result] = await db.execute(sql, { id });
