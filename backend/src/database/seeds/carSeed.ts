@@ -8,7 +8,8 @@ export default async (db: Connection) => {
   const cars = [
     ["1", "1", "1", "LYR5252", "Preto", "Onix 2020"],
     ["2", "5", "12", "LYO7787", "Branco", "Civic 2021"],
-    ["3", "6", "1", "IZP7621", "Vermelho", "Polo 2019"],
+    ["3", "6", "6", "IZP7621", "Vermelho", "Polo 2019"],
+    ["4", "7", "1", "MBO3261", "Branco", "Onix 2020"],
   ];
 
   for (const data of cars) {

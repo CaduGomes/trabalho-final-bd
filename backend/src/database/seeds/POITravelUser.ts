@@ -16,6 +16,10 @@ export default async (db: Connection) => {
     ["8", "7", "destination", "4"],
     ["9", "5", "origin", "1"],
     ["9", "7", "destination", "2"],
+    ["10", "5", "origin", "1"],
+    ["10", "6", "destination", "2"],
+    ["11", "5", "origin", "1"],
+    ["11", "6", "destination", "2"],
   ];
 
   for (const data of POITravelUsers) {
