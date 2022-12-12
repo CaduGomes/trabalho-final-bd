@@ -10,11 +10,11 @@ const UserHistory: React.FC = () => {
       travelPrice: string;
       poiOriginName: string;
       poiOriginId: string;
+      userType: string;
       poiDestinationName: string;
       poiDestinationId: string;
     }[]
   >([]);
-  console.log(travels);
 
   const authHandler = async () => {
     if (user.name === "") {
@@ -40,7 +40,7 @@ const UserHistory: React.FC = () => {
   };
 
   return (
-    <div className="w-fit h-fit flex flex-col items-center">
+    <div className="w-fit flex flex-col items-center">
       <h1 className="text-2xl font-bold">Histórico de caronas</h1>
       <div className="px-2 py-5 border border-slate-600 rounded-md flex flex-col gap-2 w-80">
         <button
@@ -50,9 +50,13 @@ const UserHistory: React.FC = () => {
           Buscar suas caronas
         </button>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2  max-h-[70vh] overflow-y-scroll ">
           {travels.map((travel) => (
             <div className="flex flex-col gap-2 border border-slate-600 rounded-md p-2">
+              <div>
+                <span className="font-bold">Tipo de usuário: </span>
+                <span>{travel.userType}</span>
+              </div>
               <div>
                 <span className="font-bold">Data: </span>
                 <span>{travel.travelDate}</span>
@@ -72,11 +76,6 @@ const UserHistory: React.FC = () => {
               <div>
                 <span className="font-bold">ID da carona: </span>
                 <span>{travel.travelId}</span>
-              </div>
-              <div>
-                <span className="font-bold">Preço: </span>
-
-                <span>{travel.travelPrice}</span>
               </div>
             </div>
           ))}
