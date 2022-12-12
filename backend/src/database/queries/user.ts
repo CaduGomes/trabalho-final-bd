@@ -1,7 +1,7 @@
 import { Query } from "../../types";
 import { logQueryResult } from "../helpers/logQueryResult";
 
-export const getUserHistory: Query<{ userType: string; userId: string }> = async (
+export const getUserHistory: Query<{ userId: string }> = async (
   db,
   data
 ) => {
@@ -11,6 +11,7 @@ export const getUserHistory: Query<{ userType: string; userId: string }> = async
       t.travelId,
       max(t.travelDate) as travelDate,
       max(t.travelPrice) as travelPrice,
+      max(t.userType) as userType,
       max(t.poiOriginName) as poiOriginName,
       max(t.poiOriginId) as poiOriginId,
       max(t.poiDestinationName) as poiDestinationName,
@@ -19,6 +20,7 @@ export const getUserHistory: Query<{ userType: string; userId: string }> = async
             Travel.id_travel as travelId,
             Travel.date as travelDate,
             Travel_User.price as travelPrice,
+            Travel_User.user_type as userType,
             POI.name as poiOriginName,
             POI.id_poi as poiOriginId,
             '' as poiDestinationName,
@@ -28,12 +30,13 @@ export const getUserHistory: Query<{ userType: string; userId: string }> = async
             inner join Travel on Travel_User.id_travel = Travel.id_travel
             inner join POI_Travel_User on POI_Travel_User.id_travel_user = Travel_User.id_travel_user
             inner join POI on POI.id_poi = POI_Travel_User.id_poi
-            where Travel_User.user_type = :userType and User.id_user = :userId and POI_Travel_User.type = 'origin'
+            where User.id_user = :userId and POI_Travel_User.type = 'origin'
             union
             select 
             Travel.id_travel as travelId,
             Travel.date as travelDate,
             Travel_User.price as travelPrice,
+            Travel_User.user_type as userType,
             '' as poiOriginName,
             '' as poiOriginId,
             POI.name as poiDestinationName,
@@ -43,7 +46,7 @@ export const getUserHistory: Query<{ userType: string; userId: string }> = async
             inner join Travel on Travel_User.id_travel = Travel.id_travel
             inner join POI_Travel_User on POI_Travel_User.id_travel_user = Travel_User.id_travel_user
             inner join POI on POI.id_poi = POI_Travel_User.id_poi
-            where Travel_User.user_type = :userType and User.id_user = :userId and POI_Travel_User.type = 'destination') t
+            where User.id_user = :userId and POI_Travel_User.type = 'destination') t
       group by t.travelId;
     `;
 
