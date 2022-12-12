@@ -7,7 +7,7 @@ export default (db: Connection, app: Express) => {
     const { email, password } = req.body;
 
     if (typeof email !== "string" || typeof password !== "string") {
-      res.status(400);
+      return res.status(400);
     }
 
     const result = await loginUser(db, req.body);

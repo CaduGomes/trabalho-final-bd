@@ -8,7 +8,7 @@ export default async (db: Connection) => {
     ["1", "4", "destination", "3"],
     ["2", "3", "origin", "1"],
     ["2", "4", "destination", "2"],
-    ["3", "2", "origin", "1"],
+    ["3", "1", "origin", "1"],
     ["3", "3", "destination", "2"],
     ["5", "1", "origin", "1"],
     ["5", "2", "destination", "2"],
