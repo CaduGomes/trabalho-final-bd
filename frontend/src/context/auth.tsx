@@ -6,7 +6,7 @@ interface AuthProviderProps {
 
 interface AuthContextData {
   name: string;
-  id: string;
+  id_user: string;
   age: number;
   email: string;
   id_campus: string;
@@ -15,7 +15,7 @@ interface AuthContextData {
 
 const initialData = {
   name: "",
-  id: "",
+  id_user: "",
   age: 0,
   email: "",
   id_campus: "",

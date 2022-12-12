@@ -16,17 +16,26 @@ const CheckIcon = () => (
 
 const SearchTravels: React.FC = () => {
   const [date, setDate] = useState<string>();
-  const [POIOrigin, setPOIOrigin] = useState();
-  const [POIDestination, setPOIDestination] = useState();
-  const [data, setData] = useState([]);
-  const [selectedSearch, setSelectedSearch] = useState();
+  const [POIOrigin, setPOIOrigin] = useState<{ id_poi: string } | null>(null);
+  const [POIDestination, setPOIDestination] = useState<{
+    id_poi: string;
+  } | null>(null);
+  const [data, setData] = useState<{ date: string; id_travel: string }[]>([]);
+  const [selectedSearch, setSelectedSearch] = useState<
+    | {
+        id_user: string;
+        name: string;
+        age: number;
+        campusName: string;
+        destinationCityName: string;
+        originCityName: string;
+      }[]
+    | null
+  >(null);
+  console.log(selectedSearch);
 
   const searchTravel = async () => {
-    if (
-      POIDestination === undefined ||
-      POIOrigin === undefined ||
-      date === undefined
-    ) {
+    if (POIDestination === null || POIOrigin === null || date === undefined) {
       alert("Preencha todos os campos para realizar a busca!");
       return;
     }
@@ -34,12 +43,12 @@ const SearchTravels: React.FC = () => {
     const url = new URLSearchParams();
 
     url.append("date", date || "");
-    url.append("origin", POIOrigin || "");
-    url.append("destination", POIDestination || "");
+    url.append("origin", POIOrigin?.id_poi || "");
+    url.append("destination", POIDestination?.id_poi || "");
 
     try {
       const response = await fetch(
-        `http://localhost:3001/travel/search?${url.toString()}`
+        `http://localhost:3001/travels/search?${url.toString()}`
       );
 
       if (response.status === 200) {
@@ -58,8 +67,12 @@ const SearchTravels: React.FC = () => {
     const response = await fetch(
       `http://localhost:3001/poi/city?name=${e.target.value}`
     );
-    const data = await response.json();
-    setPOIOrigin(data);
+    if (response.status === 200) {
+      const data = await response.json();
+      setPOIOrigin(data[0]);
+    } else {
+      setPOIOrigin(null);
+    }
   };
 
   const handleCityDestinationChange = async (
@@ -68,8 +81,26 @@ const SearchTravels: React.FC = () => {
     const response = await fetch(
       `http://localhost:3001/poi/city?name=${e.target.value}`
     );
-    const data = await response.json();
-    setPOIDestination(data);
+    if (response.status === 200) {
+      const data = await response.json();
+      setPOIDestination(data[0]);
+    } else {
+      setPOIDestination(null);
+    }
+  };
+
+  const handleTravelSelect = async (id: string) => {
+    try {
+      const response = await fetch(`http://localhost:3001/travels/${id}`);
+
+      if (response.status === 200) {
+        const data = await response.json();
+        setSelectedSearch(data);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao realizar busca dos detalhes da carona!");
+    }
   };
 
   return (
@@ -116,24 +147,23 @@ const SearchTravels: React.FC = () => {
           </button>
 
           <br />
-          {/* {data.map((travel) => (
-          <div className="border border-slate-600 rounded-md p-2">
-            <div className="flex flex-col gap-2">
-              <div className="flex flex-row gap-2">
-                <div className="font-bold">Origem:</div>
-                <div>{travel.origin.name}</div>
-              </div>
-              <div className="flex flex-row gap-2">
-                <div className="font-bold">Destino:</div>
-                <div>{travel.destination.name}</div>
-              </div>
-              <div className="flex flex-row gap-2">
-                <div className="font-bold">Preço:</div>
-                <div>{travel.price}</div>
+          {data.map((travel) => (
+            <div
+              className="border border-slate-600 rounded-md p-2"
+              onClick={() => handleTravelSelect(travel.id_travel)}
+            >
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-row gap-2">
+                  <div className="font-bold">id:</div>
+                  <div>{travel.id_travel}</div>
+                </div>
+                <div className="flex flex-row gap-2">
+                  <div className="font-bold">data:</div>
+                  <div>{travel.date}</div>
+                </div>
               </div>
             </div>
-          </div>
-        ))} */}
+          ))}
         </div>
       </div>
       <div className="w-fit h-fit flex flex-col items-center">
@@ -142,7 +172,38 @@ const SearchTravels: React.FC = () => {
           {selectedSearch == null ? (
             <p className="text-center">Selecione uma carona</p>
           ) : (
-            <>carona selecionada: {selectedSearch}</>
+            <div>
+              <>usuários da carona selecionada:</>
+              <div className="flex flex-col gap-2">
+                {selectedSearch.map((user) => (
+                  <div className="border border-slate-600 rounded-md p-2">
+                    <div className="flex flex-col gap-2">
+                      <div className="flex flex-row gap-2">
+                        <div className="font-bold">id:</div>
+                        <div>{user.id_user}</div>
+                      </div>
+                      <div className="flex flex-row gap-2">
+                        <div className="font-bold">nome:</div>
+                        <div>{user.name}</div>
+                      </div>
+                      <div className="flex flex-row gap-2">
+                        <div className="font-bold">campus:</div>
+                        <div>{user.campusName}</div>
+                      </div>
+                      <div className="flex flex-row gap-2">
+                        <div className="font-bold">cidade destino:</div>
+                        <div>{user.destinationCityName}</div>
+                      </div>
+
+                      <div className="flex flex-row gap-2">
+                        <div className="font-bold">cidade origem:</div>
+                        <div>{user.originCityName}</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
         </div>
       </div>

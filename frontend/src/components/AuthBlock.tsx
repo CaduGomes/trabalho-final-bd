@@ -45,7 +45,7 @@ const AuthBlock: React.FC = () => {
           <div>
             <h2 className="font-bold">Autenticado como:</h2>
             <p>Nome: {user.name}</p>
-            <p>Id: {user.id}</p>
+            <p>Id: {user.id_user}</p>
             <p>Idade: {user.age}</p>
             <p>Email: {user.email}</p>
             <p>Id Campus: {user.id_campus}</p>
