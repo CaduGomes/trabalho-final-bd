@@ -7,7 +7,7 @@ export const loginUser: Query<{ email: string; password: string }> = async (
 ) => {
   try {
     const sql = `
-    SELECT User.id_User, User.name, User.age, User.email, User.cpf, User.id_campus
+    SELECT User.id_user, User.name, User.age, User.email, User.cpf, User.id_campus
     FROM User
     INNER JOIN Campus_UFSC ON Campus_UFSC.id_campus = User.id_campus
     WHERE User.email = :email AND User.password = :password;
